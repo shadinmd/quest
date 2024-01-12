@@ -1,5 +1,6 @@
 import taskModel from "@/models/task.model"
 import { NextApiResponse, NextApiRequest } from "next"
+import connectDb from "@/lib/connectDb"
 
 connectDb()
 
