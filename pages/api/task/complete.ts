@@ -1,5 +1,8 @@
+import connectDb from "@/lib/connectDb"
 import taskModel from "@/models/task.model"
 import { NextApiRequest, NextApiResponse } from "next"
+
+connectDb()
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
