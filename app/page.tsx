@@ -15,12 +15,12 @@ const Home = () => {
 	const [loading, setLoading] = useState(true)
 
 	const checkTheBox = async (id: string, i: number) => {
+		const temp = [...tasks]
+		temp[i].completed = temp[i].completed ? false : true
+		setTasks(temp)
 		try {
-			const response = await api.post("/api/task/complete", { id, completed: tasks[i].completed ? false : true })
+			const response = await api.post("/api/task/complete", { id, completed: tasks[i].completed })
 			if (response.data.success) {
-				const temp = [...tasks]
-				temp[i].completed = temp[i].completed ? false : true
-				setTasks(temp)
 			} else {
 				toast.error(response.data.message)
 			}
@@ -44,11 +44,11 @@ const Home = () => {
 
 	const removeTask = async (id: string) => {
 		try {
+			const temp = [...tasks].filter((e) => e._id != id)
+			console.log(temp)
+			setTasks(temp)
 			const response = await api.post("/api/task/delete", { id })
 			if (response.data.success) {
-				const temp = [...tasks].filter((e) => e._id != id)
-				console.log(temp)
-				setTasks(temp)
 				toast.success(response.data.message)
 			} else {
 				toast.error(response.data.message)

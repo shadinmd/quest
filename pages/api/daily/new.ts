@@ -1,4 +1,3 @@
-import authorize from "@/lib/authorize"
 import connectDb from "@/lib/connectDb"
 import dailyModel from "@/models/daily.model"
 import { NextApiRequest, NextApiResponse } from "next"
@@ -7,22 +6,14 @@ connectDb()
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
-		const id = authorize(req)
-		if (!id) {
-			res.status(401).send({
-				success: false,
-				error: "unauthorized",
-				message: "please login first"
-			})
-			return
-		}
+		const { title, description, user } = req.body
 
-		const tasks = await dailyModel.find({ user: id })
+		const task = await new dailyModel({ title, description, user }).save()
 
 		res.status(200).send({
 			success: true,
-			message: "fetched daily tasks",
-			tasks
+			message: "task created successfully",
+			task
 		})
 
 	} catch (error) {
