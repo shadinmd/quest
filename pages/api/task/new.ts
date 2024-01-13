@@ -7,7 +7,7 @@ connectDb()
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		const { title, description, user } = req.body
-		if (!title || !description || !user) {
+		if (!title || !user) {
 			res.status(400).send({
 				success: false,
 				message: "please fill all fields"
