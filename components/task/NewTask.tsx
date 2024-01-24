@@ -7,7 +7,7 @@ import {
 	DialogHeader,
 	DialogContent,
 	DialogDescription,
-} from "./ui/dialog"
+} from "../ui/dialog"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { useAuth } from "@/context/AuthContext"
