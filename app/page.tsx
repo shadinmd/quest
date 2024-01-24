@@ -1,6 +1,6 @@
 "use client";
 import Container from "@/components/Container"
-import NewTask from "@/components/NewTask";
+import NewTask from "@/components/task/NewTask";
 import api from "@/lib/api";
 import { isAxiosError } from "axios";
 import { useEffect, useState } from "react";
@@ -13,6 +13,7 @@ const Home = () => {
 	const [newModal, setNewModal] = useState(false)
 	const [tasks, setTasks] = useState<TaskInterface[]>([])
 	const [loading, setLoading] = useState(true)
+	const [hoveredItem, setHoveredItem] = useState<null | number>(null)
 
 	const checkTheBox = async (id: string, i: number) => {
 		const temp = [...tasks]
@@ -99,29 +100,33 @@ const Home = () => {
 							<p className="text-4xl font-bold">Home</p>
 							<NewTask open={newModal} onOpenChange={setNewModal} addTask={addTask} />
 						</div>
-						<div className="flex flex-col gap-2 h-full w-full items-start justify-start">
-							{
-								tasks.map((e, i) => (
-									<div
-										key={i}
-										className="flex cursor-pointer border-2 rounded-lg w-full h-min p-3 items-center justify-between text-black font-bold"
-									>
-										<div onClick={() => checkTheBox(e._id!, i)} className="flex gap-10 w-full justify-start items-center">
-											<input
-												className="w-7 h-7  text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded cursor-pointer"
-												type="checkbox"
-												checked={e.completed}
-											/>
-											<p>
-												{e.title}
-											</p>
+						<div className="flex items-center justify-center w-full h-full overflow-y-auto">
+							<div className="flex flex-col gap-2 h-full w-full items-start p-10 justify-start">
+								{
+									tasks.map((e, i) => (
+										<div
+											key={i}
+											onMouseEnter={() => setHoveredItem(i)}
+											onMouseLeave={() => setHoveredItem(null)}
+											className="flex cursor-pointer border-2 rounded-lg w-full h-min p-3 items-center justify-between text-black font-bold"
+										>
+											<div onClick={() => checkTheBox(e._id!, i)} className="flex gap-10 w-full justify-start items-center">
+												<input
+													className="w-7 h-7  text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded cursor-pointer"
+													type="checkbox"
+													checked={e.completed}
+												/>
+												<p>
+													{e.title}
+												</p>
+											</div>
+											<button onClick={() => removeTask(e?._id!)}>
+												<Trash className={i == hoveredItem ? "text-red-500" : "text-white"} />
+											</button>
 										</div>
-										<button onClick={() => removeTask(e?._id!)}>
-											<Trash className="text-red-500" />
-										</button>
-									</div>
-								))
-							}
+									))
+								}
+							</div>
 						</div>
 					</>
 			}
