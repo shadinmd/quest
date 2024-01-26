@@ -12,23 +12,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			return
 		}
 
-		const id = authorize(req)
-		if (!id) {
-			res.status(401).send({
-				success: false,
-				message: "you are unathorized",
-				error: "unauthorized"
+		const user = authorize(req, res)
+
+		if (user) {
+			const tasks = await taskModel.find({ user })
+
+			res.status(200).send({
+				success: true,
+				message: "tasks fetched",
+				tasks
 			})
 		}
-
-		const tasks = await taskModel.find({ user: id })
-
-		res.status(200).send({
-			success: true,
-			message: "tasks fetched",
-			tasks
-		})
-
 	} catch (error) {
 		console.log(error)
 		res.status(500).send({

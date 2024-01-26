@@ -1,3 +1,4 @@
+import authorize from "@/lib/authorize"
 import connectDb from "@/lib/connectDb"
 import dailyModel from "@/models/daily.model"
 import { NextApiRequest, NextApiResponse } from "next"
@@ -11,15 +12,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			return
 		}
 
-		const { title, description, user } = req.body
+		const user = authorize(req, res)
+		if (user) {
+			const { title, description } = req.body
 
-		const task = await new dailyModel({ title, description, user }).save()
+			const task = await new dailyModel({ title, description, user : user as string }).save()
 
-		res.status(200).send({
-			success: true,
-			message: "task created successfully",
-			task
-		})
+			res.status(200).send({
+				success: true,
+				message: "task created successfully",
+				task
+			})
+		}
 
 	} catch (error) {
 		console.log(error)

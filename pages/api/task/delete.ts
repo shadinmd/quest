@@ -1,6 +1,7 @@
 import taskModel from "@/models/task.model"
 import { NextApiResponse, NextApiRequest } from "next"
 import connectDb from "@/lib/connectDb"
+import authorize from "@/lib/authorize"
 
 connectDb()
 
@@ -11,14 +12,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			return
 		}
 
-		const { id } = req.body
+		const user = authorize(req, res)
+		if (user) {
+			const { id } = req.body
 
-		const task = await taskModel.deleteOne({ _id: id })
+			const task = await taskModel.deleteOne({ _id: id })
 
-		res.status(200).send({
-			success: true,
-			message: "task deleted successfully"
-		})
+			res.status(200).send({
+				success: true,
+				message: "task deleted successfully"
+			})
+		}
+
 	} catch (error) {
 		console.log(error)
 		res.status(500).send({

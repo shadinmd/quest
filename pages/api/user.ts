@@ -17,23 +17,17 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			return
 		}
 
-		const id = authorize(req)
+		const id = authorize(req, res)
 
-		if (!id) {
-			res.status(404).send({
-				success: false,
-				error: "unauthorized",
-				message: "please login"
+		if (id) {
+			const user = await userModel.findOne({ _id: id })
+
+			res.status(200).send({
+				success: true,
+				message: "user data fetched successfully",
+				user
 			})
 		}
-
-		const user = await userModel.findOne({ _id: id })
-
-		res.status(200).send({
-			success: true,
-			message: "user data fetched successfully",
-			user
-		})
 
 	} catch (error) {
 		console.log(error)

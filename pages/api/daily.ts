@@ -12,23 +12,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			return
 		}
 
-		const id = authorize(req)
-		if (!id) {
-			res.status(401).send({
-				success: false,
-				error: "unauthorized",
-				message: "please login first"
+		const id = authorize(req, res)
+		if (id) {
+			const tasks = await dailyModel.find({ user: id })
+
+			res.status(200).send({
+				success: true,
+				message: "fetched daily tasks",
+				tasks
 			})
-			return
 		}
-
-		const tasks = await dailyModel.find({ user: id })
-
-		res.status(200).send({
-			success: true,
-			message: "fetched daily tasks",
-			tasks
-		})
 
 	} catch (error) {
 		console.log(error)

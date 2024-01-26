@@ -1,3 +1,4 @@
+import authorize from "@/lib/authorize"
 import connectDb from "@/lib/connectDb"
 import taskModel from "@/models/task.model"
 import { NextApiRequest, NextApiResponse } from "next"
@@ -11,23 +12,26 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			return
 		}
 
-		const { title, description, user } = req.body
-		if (!title || !user) {
-			res.status(400).send({
-				success: false,
-				message: "please fill all fields"
+		const user = authorize(req, res)
+
+		if (user) {
+			const { title, description } = req.body
+			if (!title) {
+				res.status(400).send({
+					success: false,
+					message: "please fill all fields"
+				})
+				return
+			}
+
+			const task = await new taskModel({ title, description, user }).save()
+
+			res.status(200).send({
+				success: true,
+				message: "task created successfully",
+				task
 			})
-			return
 		}
-
-		const task = await new taskModel({ title, description, user }).save()
-
-		res.status(200).send({
-			success: true,
-			message: "task created successfully",
-			task
-		})
-
 	} catch (error) {
 		console.log(error)
 		res.status(500).send({

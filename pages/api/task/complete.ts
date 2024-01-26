@@ -1,3 +1,4 @@
+import authorize from "@/lib/authorize"
 import connectDb from "@/lib/connectDb"
 import taskModel from "@/models/task.model"
 import { NextApiRequest, NextApiResponse } from "next"
@@ -10,16 +11,18 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			res.status(200).end()
 			return
 		}
+		const user = authorize(req, res)
+		if (user) {
+			const { id, completed } = req.body
 
-		const { id, completed } = req.body
+			const updatedTask = await taskModel.updateOne({ _id: id }, { $set: { completed } })
 
-		const updatedTask = await taskModel.updateOne({ _id: id }, { $set: { completed } })
-
-		res.status(200).send({
-			success: true,
-			message: "task update",
-			task: updatedTask
-		})
+			res.status(200).send({
+				success: true,
+				message: "task update",
+				task: updatedTask
+			})
+		}
 
 	} catch (error) {
 		console.log(error)
