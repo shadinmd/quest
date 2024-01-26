@@ -6,6 +6,11 @@ connectDb()
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
+		if (req.method == "OPTIONS") {
+			res.status(200).end()
+			return
+		}
+
 		const { title, description, user } = req.body
 		if (!title || !user) {
 			res.status(400).send({

@@ -3,6 +3,11 @@ import { NextApiRequest, NextApiResponse } from "next"
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
+		if (req.method == "OPTIONS") {
+			res.status(200).end()
+			return
+		}
+
 		const tasks = await dailyModel.updateMany({}, { $set: { completed: false } })
 		res.status(200).send({
 			success: true,

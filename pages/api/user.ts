@@ -7,6 +7,11 @@ connectDb()
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
+		if (req.method == "OPTIONS") {
+			res.status(200).end()
+			return
+		}
+
 		if (req.method !== "GET") {
 			res.status(404).send({})
 			return
