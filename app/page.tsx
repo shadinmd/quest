@@ -16,6 +16,8 @@ const Clock = memo(() => {
 	return <p suppressHydrationWarning className="flex items-center justify-center text-6xl font-bold">{moment(time).format("HH:mm:ss")}</p>
 })
 
+Clock.displayName = "Clock"
+
 const Home = () => {
 	return (
 		<Container className="flex-col items-center justify-center">
