@@ -22,10 +22,11 @@ import TaskInterface from "@/interface/task.interface"
 interface Props {
 	open: boolean,
 	onOpenChange: (open: boolean) => void,
-	addTask: (task: TaskInterface) => void
+	addTask: (task: TaskInterface) => void,
+	group: string
 }
 
-const NewTask: React.FC<Props> = ({ open, onOpenChange, addTask }) => {
+const NewTask: React.FC<Props> = ({ open, onOpenChange, addTask, group }) => {
 	const { user } = useAuth()
 
 	const {
@@ -36,7 +37,7 @@ const NewTask: React.FC<Props> = ({ open, onOpenChange, addTask }) => {
 
 	const formSubmit = async (data: formType) => {
 		try {
-			const response = await api.post("/api/task/new", { ...data, user: user._id })
+			const response = await api.post("/api/task", { ...data, group, user: user._id })
 			if (response.data.success) {
 				console.log(response.data)
 				toast.success(response.data.message)
