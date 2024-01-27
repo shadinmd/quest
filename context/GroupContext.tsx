@@ -4,21 +4,30 @@ import api from "@/lib/api"
 import { isAxiosError } from "axios"
 import { createContext, useContext, useEffect, useState } from "react"
 import { toast } from "sonner"
+import { useAuth } from "./AuthContext"
 
 interface Props {
 	groups: GroupInterface[],
-	setGroups: (groups: GroupInterface[]) => void
+	setGroups: (groups: GroupInterface[]) => void,
+	fetchGroups: () => void
 }
 
 const groupContext = createContext<Props>({
 	groups: [],
-	setGroups: (groups: GroupInterface[]) => { groups }
+	setGroups: (groups: GroupInterface[]) => { groups },
+	fetchGroups: () => { }
 })
 
 export const GroupProvider = ({ children }: { children: React.ReactNode }) => {
 	const [groups, setGroups] = useState<GroupInterface[]>([])
+	const { loggedIn } = useAuth()
 
 	useEffect(() => {
+		if (loggedIn)
+			fetchGroups()
+	}, [loggedIn])
+
+	const fetchGroups = () => {
 		api.get("/api/group").then(({ data }) => {
 			if (data.success)
 				setGroups(data.groups)
@@ -35,10 +44,10 @@ export const GroupProvider = ({ children }: { children: React.ReactNode }) => {
 				toast.error("something went wrong")
 			console.log(error)
 		})
-	}, [])
+	}
 
 	return (
-		<groupContext.Provider value={{ groups, setGroups }}>
+		<groupContext.Provider value={{ groups, setGroups, fetchGroups }}>
 			{children}
 		</groupContext.Provider>
 	)
