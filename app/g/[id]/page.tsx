@@ -54,7 +54,7 @@ const Group = ({ params }: { params: { id: string } }) => {
 				toast.error("something went wrong")
 			console.log(error)
 		})
-	}, [])
+	}, [params.id])
 
 	const deleteGroup = () => {
 		api.delete(`/api/group/${params.id}`).then(({ data }) => {
