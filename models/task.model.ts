@@ -6,6 +6,11 @@ const taskSchema = new mongoose.Schema<TaskInterface>({
 		type: String,
 		required: true
 	},
+	group: {
+		type: String,
+		required: true,
+		ref: "Group"
+	},
 	user: {
 		type: String,
 		required: true,
