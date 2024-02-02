@@ -15,7 +15,6 @@ import { toast } from "sonner"
 
 const Group = ({ params }: { params: { id: string } }) => {
 
-	const [tasks, setTasks] = useState<TaskInterface[]>([])
 	const { groups, setGroups } = useGroup()
 	const [group, setGroup] = useState<GroupInterface>()
 	const [completedTasks, setCompletedTasks] = useState<TaskInterface[]>([])
@@ -27,7 +26,6 @@ const Group = ({ params }: { params: { id: string } }) => {
 	useEffect(() => {
 		api.get(`/api/task?group=${params.id}`).then(({ data }) => {
 			if (data.success) {
-				setTasks(data.tasks)
 				setCompletedTasks(data.tasks.filter((e: TaskInterface) => e.completed))
 				setIncompleteTasks(data.tasks.filter((e: TaskInterface) => e.completed == false))
 			}
