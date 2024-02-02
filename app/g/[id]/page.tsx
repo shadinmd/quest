@@ -109,28 +109,30 @@ const Group = ({ params }: { params: { id: string } }) => {
 					</YesNoDialog>
 				</div>
 			</div>
-			<div className="flex w-full h-full flex-col items-center justify-start gap-2 py-10">
-				{tasks.map((e, i) => (
-					<div
-						key={i}
-						className="flex justify-between px-2 py-1 gap-2 items-center w-full h-10 border-2 rounded-lg"
-						onMouseEnter={() => setHoveredItem(i)}
-						onMouseLeave={() => setHoveredItem(undefined)}
-					>
-						<div onClick={() => toggleTaskCompletion(e?._id!, i)} className="flex gap-2 w-full items-center justify-start cursor-pointer">
-							<input
-								onChange={() => { }}
-								className="h-[20px] w-[20px]"
-								checked={e.completed}
-								type="checkbox"
-							/>
-							<p className="font-bold">
-								{e.title}
-							</p>
+			<div className="flex items-center justify-center h-full w-full overflow-auto">
+				<div className="flex w-full h-full flex-col items-center justify-start gap-2 py-10">
+					{tasks.map((e, i) => (
+						<div
+							key={i}
+							className="flex justify-between px-2 py-1 gap-2 items-center w-full h-10 border-2 rounded-lg"
+							onMouseEnter={() => setHoveredItem(i)}
+							onMouseLeave={() => setHoveredItem(undefined)}
+						>
+							<div onClick={() => toggleTaskCompletion(e?._id!, i)} className="flex gap-2 w-full items-center justify-start cursor-pointer">
+								<input
+									onChange={() => { }}
+									className="h-[20px] w-[20px]"
+									checked={e.completed}
+									type="checkbox"
+								/>
+								<p className="font-bold">
+									{e.title}
+								</p>
+							</div>
+							<Trash className={`text-red-500 transition-all cursor-pointer ${hoveredItem == i ? "visible" : "hidden"}`} />
 						</div>
-						<Trash className={`text-red-500 transition-all cursor-pointer ${hoveredItem == i ? "visible" : "hidden"}`} />
-					</div>
-				))}
+					))}
+				</div>
 			</div>
 		</Container>
 	)
