@@ -6,10 +6,12 @@ interface Props {
 	onNo?: () => void,
 	open?: boolean,
 	onOpenChange?: (open: boolean) => void,
-	children?: React.ReactNode
+	children?: React.ReactNode,
+	title?: string,
+	description?: string
 }
 
-const YesNoDialog: React.FC<Props> = ({ onNo, onYes, onOpenChange, open, children }) => {
+const YesNoDialog: React.FC<Props> = ({ onNo, onYes, onOpenChange, open, children, title, description }) => {
 	const [dialog, setDialog] = useState(false)
 
 	const no = () => {
@@ -38,10 +40,10 @@ const YesNoDialog: React.FC<Props> = ({ onNo, onYes, onOpenChange, open, childre
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>
-						Confirm
+						{title || "Confirm"}
 					</DialogTitle>
 					<DialogDescription>
-						Please confirm the action you are about to do
+						{description || "Please confirm the action you are about to do "}
 					</DialogDescription>
 				</DialogHeader>
 				<div className="flex gap-5 justify-evenly w-full">
