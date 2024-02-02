@@ -14,7 +14,7 @@ const linkStyle: className = "flex gap-3 items-center text-xl text-black bg-whit
 
 const Sidebar = () => {
 	const { logout, loggedIn } = useAuth()
-	const { groups, setGroups } = useGroup()
+	const { groups, setGroups, clearGroups } = useGroup()
 	const [newGroup, setNewGroup] = useState(false)
 
 	const addGroup = (group: GroupInterface) => {
@@ -25,7 +25,7 @@ const Sidebar = () => {
 
 	return (
 		<div className="flex flex-col gap-4 justify-between h-full py-5">
-			<Link className={linkStyle} href={"/"}>Tasks</Link>
+			<Link style={{ pointerEvents: loggedIn ? "auto" : "none" }} className={linkStyle} href={"/"}>Tasks</Link>
 			<div className="flex h-full w-full items-center justify-center overflow-auto">
 				<div className="flex flex-col gap-2 items-center justify-start h-full">
 					{
@@ -49,16 +49,16 @@ const Sidebar = () => {
 						<Icon icon={"typcn:plus"} className="text-2xl text-green-500 py-1" />
 					</div>
 				</NewGroup>
-				<Link className={linkStyle} href={"/bucketlist"}>Bucket list</Link>
+				<Link style={{ pointerEvents: loggedIn ? "auto" : "none" }} className={linkStyle} href={"/bucketlist"}>Bucket list</Link>
 				{
 					loggedIn &&
-					<YesNoDialog onYes={() => logout()}>
+					<YesNoDialog onYes={() => { logout(); clearGroups() }}>
 						<div className={cn(linkStyle, "text-red-500 w-full h-full")}>
 							Logout
 						</div>
 					</YesNoDialog>
 				}
-				<Link className={linkStyle} href={"/settings"}>
+				<Link style={{ pointerEvents: loggedIn ? "auto" : "none" }} className={linkStyle} href={"/settings"}>
 					<Icon icon={"mdi:gear"} />
 					Settings
 				</Link>
