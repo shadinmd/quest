@@ -9,13 +9,15 @@ import { useAuth } from "./AuthContext"
 interface Props {
 	groups: GroupInterface[],
 	setGroups: (groups: GroupInterface[]) => void,
-	fetchGroups: () => void
+	fetchGroups: () => void,
+	clearGroups: () => void
 }
 
 const groupContext = createContext<Props>({
 	groups: [],
 	setGroups: (groups: GroupInterface[]) => { groups },
-	fetchGroups: () => { }
+	fetchGroups: () => { },
+	clearGroups: () => { },
 })
 
 export const GroupProvider = ({ children }: { children: React.ReactNode }) => {
@@ -26,6 +28,10 @@ export const GroupProvider = ({ children }: { children: React.ReactNode }) => {
 		if (loggedIn)
 			fetchGroups()
 	}, [loggedIn])
+
+	const clearGroups = () => {
+		setGroups([])
+	}
 
 	const fetchGroups = () => {
 		api.get("/api/group").then(({ data }) => {
@@ -38,7 +44,6 @@ export const GroupProvider = ({ children }: { children: React.ReactNode }) => {
 				if (error.response?.data.message)
 					toast.error(error.response.data.message)
 				else
-
 					toast.error(error.message)
 			else
 				toast.error("something went wrong")
@@ -47,7 +52,7 @@ export const GroupProvider = ({ children }: { children: React.ReactNode }) => {
 	}
 
 	return (
-		<groupContext.Provider value={{ groups, setGroups, fetchGroups }}>
+		<groupContext.Provider value={{ groups, setGroups, fetchGroups, clearGroups }}>
 			{children}
 		</groupContext.Provider>
 	)
