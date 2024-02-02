@@ -5,7 +5,9 @@ interface TaskInterface {
 	group?: string,
 	user?: string,
 	completed?: boolean,
-	deadline?: Date
+	deadline?: Date,
+	createdAt: Date,
+	updatedAt: Date
 }
 
 export default TaskInterface
