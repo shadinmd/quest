@@ -140,7 +140,7 @@ const Group = ({ params }: { params: { id: string } }) => {
 					</YesNoDialog>
 				</div>
 			</div>
-			<div className="flex items-center justify-center p-5 w-full overflow-hidden">
+			<div className="flex items-center justify-start p-5 w-full h-full overflow-hidden">
 				<div id="task-container" className="flex items-center justify-center h-full w-full overflow-auto">
 					<div className="flex gap-10 w-full h-full flex-col items-center justify-start py-10">
 						<div className="flex flex-col gap-2 w-full">
