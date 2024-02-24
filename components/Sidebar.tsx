@@ -26,14 +26,14 @@ const Sidebar = () => {
 	return (
 		<div className="flex flex-col gap-4 justify-between h-full py-5">
 			<Link style={{ pointerEvents: loggedIn ? "auto" : "none" }} className={linkStyle} href={"/"}>Tasks</Link>
-			<div className="flex h-full w-full items-center justify-center overflow-auto">
-				<div className="flex flex-col gap-2 items-center justify-start h-full">
+			<div id="groups-overflow-container" className="flex h-full w-full items-center justify-center overflow-auto">
+				<div className="flex flex-col gap-2 items-center justify-start h-full w-full">
 					{
 						groups.length > 0 ? groups.map((e, i) => (
 							<Link
 								key={i}
 								href={`/g/${e?._id}`}
-								className="flex flex-col gap-1 w-full font-bold items-center border border-white rounded-lg hover:border-black cursor-pointer"
+								className={cn(linkStyle, "w-full")}
 							>
 								{e?.name}
 							</Link>

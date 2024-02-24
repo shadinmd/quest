@@ -5,3 +5,12 @@
 #task-container::-webkit-scrollbar {
 	width: 0px;
 }
+
+#groups-overflow-container::-webkit-scrollbar {
+	width: 4px;
+}
+
+#groups-overflow-container::-webkit-scrollbar-thumb {
+	width: 2px;
+	background: grey;
+}
