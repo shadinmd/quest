@@ -8,6 +8,7 @@ import Sidebar from '@/components/Sidebar'
 import { AuthProvider } from '@/context/AuthContext'
 import { Toaster } from 'sonner'
 import { GroupProvider } from '@/context/GroupContext'
+import GroupCommand from '@/components/GroupCommand'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,6 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<Toaster expand={true} position='top-center' richColors={true} />
 				<AuthProvider>
 					<GroupProvider>
+						<GroupCommand />
 						<Navbar />
 						<Container className="gap-2 pb-20 px-10 h-screen w-screen">
 							<Sidebar />
