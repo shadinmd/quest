@@ -9,6 +9,7 @@ import { AuthProvider } from '@/context/AuthContext'
 import { Toaster } from 'sonner'
 import { GroupProvider } from '@/context/GroupContext'
 import GroupCommand from '@/components/GroupCommand'
+import { headers } from "next/headers"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,6 +20,9 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+
+	const pathName = headers().get("next-url")
+
 	return (
 		<html lang="en">
 			<body className={cn(inter.className, "flex flex-col overflow-hidden")}>
@@ -28,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 						<GroupCommand />
 						<Navbar />
 						<Container className="gap-2 pb-20 px-10 h-screen w-screen">
-							<Sidebar />
+							{(pathName != "/register" && pathName != "/login") && < Sidebar />}
 							{children}
 						</Container>
 					</GroupProvider>
