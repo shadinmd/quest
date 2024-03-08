@@ -21,7 +21,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 		if (!user) {
 			res.status(400).send({
 				success: false,
-				message: `user not found ${username}`
+				message: `user ${username} not found`
 			})
 
 			return
