@@ -25,7 +25,7 @@ const GroupCommand = () => {
 		return () => {
 			document.removeEventListener("keydown", handler)
 		}
-	}, [groups])
+	}, [groups, open])
 
 	const onSelect = (id: string) => {
 		router.push(`/g/${id}`)
