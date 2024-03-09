@@ -12,6 +12,7 @@ import { Trash } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
+import { ScaleLoader } from "react-spinners"
 
 const Group = ({ params }: { params: { id: string } }) => {
 
@@ -20,10 +21,12 @@ const Group = ({ params }: { params: { id: string } }) => {
 	const [completedTasks, setCompletedTasks] = useState<TaskInterface[]>([])
 	const [inCompleteTasks, setIncompleteTasks] = useState<TaskInterface[]>([])
 	const [newTaskModal, setNewTaskModal] = useState(false)
+	const [loading, setLoading] = useState(false)
 
 	const router = useRouter()
 
 	useEffect(() => {
+		setLoading(true)
 		api.get(`/api/task?group=${params.id}`).then(({ data }) => {
 			if (data.success) {
 				setCompletedTasks(data.tasks.filter((e: TaskInterface) => e.completed))
@@ -56,6 +59,8 @@ const Group = ({ params }: { params: { id: string } }) => {
 			else
 				toast.error("something went wrong")
 			console.log(error)
+		}).finally(() => {
+			setLoading(false)
 		})
 	}, [params.id])
 
@@ -131,47 +136,54 @@ const Group = ({ params }: { params: { id: string } }) => {
 
 	return (
 		<Container className="flex-col">
-			<div className="flex w-full justify-between px-3">
-				<p className="text-3xl font-bold">{group?.name}</p>
-				<div className="flex gap-2 items-center justify-center">
-					<NewTask open={newTaskModal} onOpenChange={setNewTaskModal} addTask={addTask} group={params.id} />
-					<YesNoDialog onYes={() => deleteGroup()}>
-						<Trash className="text-red-500 cursor-pointer" />
-					</YesNoDialog>
-				</div>
-			</div>
-			<div className="flex items-center justify-start p-5 w-full h-full overflow-hidden">
-				<div id="task-container" className="flex items-center justify-center h-full w-full overflow-auto">
-					<div className="flex gap-10 w-full h-full flex-col items-center justify-start py-10">
-						<div className="flex flex-col gap-2 w-full">
-							<p className="text-xl font-bold underline">To do</p>
-							{inCompleteTasks.map((e, i) => (
-								<TaskItem
-									setTasks={setIncompleteTasks}
-									task={e}
-									index={i}
-									key={i}
-									check={check}
-									uncheck={uncheck}
-								/>
-							))}
+			{
+				loading ?
+					<ScaleLoader loading={true} />
+					:
+					<>
+						<div className="flex w-full justify-between px-3">
+							<p className="text-3xl font-bold">{group?.name}</p>
+							<div className="flex gap-2 items-center justify-center">
+								<NewTask open={newTaskModal} onOpenChange={setNewTaskModal} addTask={addTask} group={params.id} />
+								<YesNoDialog onYes={() => deleteGroup()}>
+									<Trash className="text-red-500 cursor-pointer" />
+								</YesNoDialog>
+							</div>
 						</div>
-						<div className="flex flex-col gap-2 w-full">
-							<p className="text-xl font-bold underline">Completed</p>
-							{completedTasks.map((e, i) => (
-								<TaskItem
-									setTasks={setCompletedTasks}
-									task={e}
-									index={i}
-									key={i}
-									check={check}
-									uncheck={uncheck}
-								/>
-							))}
+						<div className="flex items-center justify-start p-5 w-full h-full overflow-hidden">
+							<div id="task-container" className="flex items-center justify-center h-full w-full overflow-auto">
+								<div className="flex gap-10 w-full h-full flex-col items-center justify-start py-10">
+									<div className="flex flex-col gap-2 w-full">
+										<p className="text-xl font-bold underline">To do</p>
+										{inCompleteTasks.map((e, i) => (
+											<TaskItem
+												setTasks={setIncompleteTasks}
+												task={e}
+												index={i}
+												key={i}
+												check={check}
+												uncheck={uncheck}
+											/>
+										))}
+									</div>
+									<div className="flex flex-col gap-2 w-full">
+										<p className="text-xl font-bold underline">Completed</p>
+										{completedTasks.map((e, i) => (
+											<TaskItem
+												setTasks={setCompletedTasks}
+												task={e}
+												index={i}
+												key={i}
+												check={check}
+												uncheck={uncheck}
+											/>
+										))}
+									</div>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
-			</div>
+					</>
+			}
 		</Container>
 	)
 }
