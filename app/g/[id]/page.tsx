@@ -64,6 +64,21 @@ const Group = ({ params }: { params: { id: string } }) => {
 		})
 	}, [params.id])
 
+	useEffect(() => {
+		const newTaskShortcut = (e: KeyboardEvent) => {
+			if (e.key === "c" && (e.ctrlKey || e.metaKey)) {
+				e.preventDefault()
+				setNewTaskModal(true);
+			}
+		};
+
+		addEventListener("keydown", newTaskShortcut);
+
+		return () => {
+			removeEventListener("keydown", newTaskShortcut);
+		};
+	}, []);
+
 	const deleteGroup = () => {
 		api.delete(`/api/group/${params.id}`).then(({ data }) => {
 			if (data.success) {
