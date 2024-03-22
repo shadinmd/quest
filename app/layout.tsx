@@ -19,9 +19,6 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-
-	const pathName = headers().get("next-url")
-
 	return (
 		<html lang="en">
 			<body className={cn(inter.className, "flex overflow-hidden h-screen")}>
@@ -29,8 +26,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 				<AuthProvider>
 					<GroupProvider>
 						<GroupCommand />
-						<Container className="h-screen w-screen">
-							{(pathName != "/register" && pathName != "/login") && < Sidebar />}
+						<Container className="h-screen w-screen overflow-hidden">
+							<Sidebar />
 							{children}
 						</Container>
 					</GroupProvider>

@@ -13,6 +13,12 @@ interface Item {
 
 const Sidebar = () => {
 
+	const pathname = usePathname()
+
+	if (pathname == "/login" || pathname == "/register") {
+		return <></>
+	}
+
 	return (
 		<div className="flex flex-col border-r-2 items-center w-64 justify-start h-full">
 			<div className="flex items-center p-5 border-b-2 w-full">
