@@ -160,7 +160,7 @@ const Page = ({ params }: Props) => {
 						<Sort setSearch={setSort} />
 					</div>
 				</div>
-				<div className="text-gray-400 w-full h-full max-h-full overflow-y-auto">
+				<div className="w-full h-full max-h-full overflow-y-auto">
 					<div id="tasks-scroll" className="w-full">
 						{filteredTasks.map((e, i) => (
 							<div
