@@ -36,7 +36,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 			if (req.method == "DELETE") {
 				const { id } = req.query
-				console.log(id);
 
 				if (!id) {
 					res.status(400).send({

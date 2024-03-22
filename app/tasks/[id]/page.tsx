@@ -4,11 +4,13 @@ import Navbar from "@/components/Navbar"
 import YesNoDialog from "@/components/YesNoDialog"
 import NewTask from "@/components/task/NewTask"
 import Sort from "@/components/task/Sort"
+import { useGroup } from "@/context/GroupContext"
 import GroupInterface from "@/interface/group.interface"
 import TaskInterface from "@/interface/task.interface"
 import api, { handleAxiosError } from "@/lib/api"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { isAxiosError } from "axios"
+import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
 import { ScaleLoader } from "react-spinners"
 import { toast } from "sonner"
@@ -28,6 +30,10 @@ const Page = ({ params }: Props) => {
 	const [loading, setLoading] = useState(true)
 	const [search, setSearch] = useState("")
 	const [sort, setSort] = useState("")
+
+	const { removeGroup } = useGroup()
+
+	const router = useRouter()
 
 	useEffect(() => {
 		api.get(`/task?group=${params.id}`)
@@ -118,6 +124,20 @@ const Page = ({ params }: Props) => {
 		})
 	}, [tasks])
 
+	const deleteGroup = async () => {
+		try {
+			const { data } = await api.delete(`/group/${params.id}`)
+			if (data.success) {
+				removeGroup(params.id)
+				router.back()
+			} else {
+				toast.error(data.message)
+			}
+		} catch (error) {
+			handleAxiosError(error)
+		}
+	}
+
 	if (loading) {
 		return (
 			<Container className="">
@@ -151,7 +171,7 @@ const Page = ({ params }: Props) => {
 								<Icon icon={"mdi:plus"} />
 							</div>
 						</NewTask>
-						<YesNoDialog className="w-full h-full" onYes={() => { }} onNo={() => { console.log("oh no") }}>
+						<YesNoDialog className="w-full h-full" onYes={deleteGroup} onNo={() => { console.log("oh no") }}>
 							<div className="flex items-center justify-center h-full w-full bg-red-300">
 								<Icon icon={"mdi:trash"} />
 							</div>
