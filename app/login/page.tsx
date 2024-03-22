@@ -24,7 +24,7 @@ const Login = () => {
 
 	const submitForm = async (data: formType) => {
 		try {
-			const response = await api.post("/api/auth/login", data)
+			const response = await api.post("/auth/login", data)
 			if (response.data.success) {
 				localStorage.setItem("token", response.data.token)
 				setUser(response.data.user)
@@ -68,7 +68,7 @@ const Login = () => {
 				<button className="bg-black text-white px-3 py-1 rounded-lg font-bold" type="submit">
 					Login
 				</button>
-				<Link href={"/register"} className="font-bold text-sm">don't have an account ? register here</Link>
+				<Link href={"/register"} className="font-bold text-gray-400">don't have an account ? <span className="text-black">register here</span></Link>
 			</form>
 		</Container>
 	)
