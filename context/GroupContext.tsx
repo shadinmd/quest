@@ -17,6 +17,7 @@ export const GroupProvider = ({ children }: { children: ReactNode }) => {
 	const [groups, setGroups] = useState<GroupInterface[]>([])
 
 	useEffect(() => {
+		if(localStorage.getItem("token"))
 		api.get("/group")
 			.then(({ data }) => {
 				if (data.success) {

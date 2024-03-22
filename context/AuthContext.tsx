@@ -60,8 +60,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 					toast.error("something went wrong")
 				console.log(error)
 			})
-		} else {
-			router.push("/login")
 		}
 	}, [])
 
