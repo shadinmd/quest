@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { Dialog, DialogTrigger, DialogTitle, DialogContent, DialogHeader, DialogDescription } from "./ui/dialog"
+import { cn } from "@/lib/utils"
 
 interface Props {
 	onYes: () => void,
@@ -9,9 +10,10 @@ interface Props {
 	children?: React.ReactNode,
 	title?: string,
 	description?: string
+	className?: string
 }
 
-const YesNoDialog: React.FC<Props> = ({ onNo, onYes, onOpenChange, open, children, title, description }) => {
+const YesNoDialog: React.FC<Props> = ({ className, onNo, onYes, onOpenChange, open, children, title, description }) => {
 	const [dialog, setDialog] = useState(false)
 
 	const no = () => {
@@ -34,7 +36,7 @@ const YesNoDialog: React.FC<Props> = ({ onNo, onYes, onOpenChange, open, childre
 
 	return (
 		<Dialog onOpenChange={onOpenChange || setDialog} open={open || dialog}>
-			<DialogTrigger className="outline-none">
+			<DialogTrigger className={cn("outline-none", className)}>
 				{children}
 			</DialogTrigger>
 			<DialogContent>

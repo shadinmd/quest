@@ -9,7 +9,7 @@ const authContext = createContext<Props>({
 	loggedIn: false,
 	login: () => { },
 	logout: () => { },
-	setUser: (user: { username: string, _id: string }) => { },
+	setUser: (_user: { username: string, _id: string }) => { },
 	user: {
 		_id: "",
 		username: ""
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	useEffect(() => {
 		if (localStorage.getItem("token")) {
 			login()
-			api.get("/api/user").then((response) => {
+			api.get("/user").then((response) => {
 				setUser(response?.data?.user)
 			}).catch((error) => {
 				if (isAxiosError(error))

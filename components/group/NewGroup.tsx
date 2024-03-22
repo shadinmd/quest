@@ -16,17 +16,18 @@ import { isAxiosError } from "axios"
 import { toast } from "sonner"
 import api from "@/lib/api"
 import { DialogTrigger } from "@radix-ui/react-dialog"
-import { Icon } from "@iconify/react/dist/iconify.js"
 import GroupInterface from "@/interface/group.interface"
+import { cn } from "@/lib/utils"
 
 interface Props {
 	open: boolean,
 	onOpenChange: (open: boolean) => void,
 	addGroup: (group: GroupInterface) => void,
-	children: React.ReactNode
+	children: React.ReactNode,
+	className?: string
 }
 
-const NewGroup: React.FC<Props> = ({ open, onOpenChange, addGroup, children }) => {
+const NewGroup: React.FC<Props> = ({ className, open, onOpenChange, addGroup, children }) => {
 	const { user } = useAuth()
 
 	const {
@@ -37,10 +38,8 @@ const NewGroup: React.FC<Props> = ({ open, onOpenChange, addGroup, children }) =
 
 	const formSubmit = async (data: formType) => {
 		try {
-			const response = await api.post("/api/group", { ...data, user: user._id })
+			const response = await api.post("/group", { ...data, user: user._id })
 			if (response.data.success) {
-				console.log(response.data)
-				toast.success(response.data.message)
 				addGroup(response.data.group)
 				onOpenChange(false)
 			}
@@ -60,7 +59,7 @@ const NewGroup: React.FC<Props> = ({ open, onOpenChange, addGroup, children }) =
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogTrigger>
+			<DialogTrigger className={cn("w-full h-full outline-none", className)}>
 				{children}
 			</DialogTrigger>
 			<DialogContent>

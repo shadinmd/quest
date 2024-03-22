@@ -1,7 +1,6 @@
 "use client";
 import Container from "@/components/Container"
 import { useAuth } from "@/context/AuthContext";
-import { useGroup } from "@/context/GroupContext";
 import api from "@/lib/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { isAxiosError } from "axios";
@@ -16,7 +15,6 @@ import { z } from "zod";
 const Login = () => {
 
 	const { setUser, login } = useAuth()
-	const { fetchGroups } = useGroup()
 	const {
 		register,
 		formState: { errors },
@@ -31,7 +29,6 @@ const Login = () => {
 				localStorage.setItem("token", response.data.token)
 				setUser(response.data.user)
 				login()
-				fetchGroups()
 				router.push("/")
 			}
 			else
