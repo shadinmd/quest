@@ -14,3 +14,12 @@
 	width: 2px;
 	background: grey;
 }
+
+#tasks-scroll::-webkit-scrollbar {
+	width: 5px;
+}
+
+#tasks-scroll::-webkit-scrollbar-thumb {
+	width: 2px;
+	background: rgb(156 163 175);
+}

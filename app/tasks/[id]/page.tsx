@@ -131,7 +131,7 @@ const Page = ({ params }: Props) => {
 		<Container className="flex flex-col h-full w-full">
 			<Navbar title={group?.name} >
 			</Navbar>
-			<Container className="flex-col justify-start">
+			<Container className="flex-col justify-start overflow-hidden">
 				<div className="flex items-center w-full text-xl border-b-2">
 					<input
 						autoFocus
@@ -160,30 +160,34 @@ const Page = ({ params }: Props) => {
 						<Sort setSearch={setSort} />
 					</div>
 				</div>
-				{filteredTasks.map((e, i) => (
-					<div
-						key={i}
-						className={`flex text-xl ${e.completed ? "line-through italic hover:bg-green-100" : "hover:bg-red-100"} cursor-pointer border-b-2 font-semibold items-center gap-5 w-full`}
-					>
-						<div
-							onClick={() => { toggleTaskCompletion(e._id!) }}
-							className="flex gap-5 items-center w-full h-full py-3 px-6"
-						>
-							<input
-								checked={e.completed}
-								onChange={(_e) => toggleTaskCompletion(e._id!)}
-								type="checkbox"
-								className="accent-green-200 rounded-3xl bg-green-500 w-4 h-4 outline-none"
-							/>
-							<p className="w-full">{e.title}</p>
-						</div>
-						<YesNoDialog onYes={() => deleteTask(e._id!)} className="flex items-center justify-center w-14 h-full hover:bg-red-200 hover:text-white text-red-500">
-							<Icon icon={"mdi:trash"} />
-						</YesNoDialog>
+				<div className="text-gray-400 w-full h-full max-h-full overflow-y-auto">
+					<div id="tasks-scroll" className="w-full">
+						{filteredTasks.map((e, i) => (
+							<div
+								key={i}
+								className={`flex text-xl ${e.completed ? "line-through italic hover:bg-green-100" : "hover:bg-red-100"} cursor-pointer border-b-2 font-semibold items-center gap-5 w-full`}
+							>
+								<div
+									onClick={() => { toggleTaskCompletion(e._id!) }}
+									className="flex gap-5 items-center w-full h-full py-3 px-6"
+								>
+									<input
+										checked={e.completed}
+										onChange={(_e) => toggleTaskCompletion(e._id!)}
+										type="checkbox"
+										className="accent-green-200 rounded-3xl bg-green-500 w-4 h-4 outline-none"
+									/>
+									<p className="w-full">{e.title}</p>
+								</div>
+								<YesNoDialog onYes={() => deleteTask(e._id!)} className="flex items-center justify-center w-14 h-full hover:bg-red-200 hover:text-white text-red-500">
+									<Icon icon={"mdi:trash"} />
+								</YesNoDialog>
+							</div>
+						))}
 					</div>
-				))}
-			</Container>
-		</Container>
+				</div>
+			</Container >
+		</Container >
 	)
 }
 
