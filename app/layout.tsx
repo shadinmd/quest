@@ -1,15 +1,14 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Navbar from '@/components/Navbar'
 import cn from '@/lib/cn'
 import Container from '@/components/Container'
 import Sidebar from '@/components/Sidebar'
 import { AuthProvider } from '@/context/AuthContext'
 import { Toaster } from 'sonner'
-import { GroupProvider } from '@/context/GroupContext'
 import GroupCommand from '@/components/GroupCommand'
 import { headers } from "next/headers"
+import Navbar from '@/components/Navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,19 +24,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 	return (
 		<html lang="en">
-			<body className={cn(inter.className, "flex flex-col overflow-hidden")}>
+			<body className={cn(inter.className, "flex overflow-hidden h-screen")}>
 				<Toaster expand={true} position='top-center' richColors={true} />
 				<AuthProvider>
-					<GroupProvider>
-						<GroupCommand />
-						<Navbar />
-						<Container className="gap-2 pb-20 px-10 h-screen w-screen">
-							{(pathName != "/register" && pathName != "/login") && < Sidebar />}
-							{children}
-						</Container>
-					</GroupProvider>
+					<GroupCommand />
+					<Navbar />
+					<Container className="gap-2 pb-20 px-10 h-screen w-screen">
+						{(pathName != "/register" && pathName != "/login") && < Sidebar />}
+						{children}
+					</Container>
 				</AuthProvider>
 			</body>
-		</html>
+		</html >
 	)
 }

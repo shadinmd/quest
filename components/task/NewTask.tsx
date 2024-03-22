@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react"
+import React, { ReactNode } from "react"
 import {
 	Dialog,
 	DialogTitle,
@@ -16,7 +16,6 @@ import { isAxiosError } from "axios"
 import { toast } from "sonner"
 import api from "@/lib/api"
 import { DialogTrigger } from "@radix-ui/react-dialog"
-import { Icon } from "@iconify/react/dist/iconify.js"
 import TaskInterface from "@/interface/task.interface"
 
 interface Props {
@@ -24,9 +23,10 @@ interface Props {
 	onOpenChange: (open: boolean) => void,
 	addTask: (task: TaskInterface) => void,
 	group: string
+	children: ReactNode
 }
 
-const NewTask: React.FC<Props> = ({ open, onOpenChange, addTask, group }) => {
+const NewTask: React.FC<Props> = ({ open, onOpenChange, addTask, group, children }) => {
 	const { user } = useAuth()
 
 	const {
@@ -37,10 +37,8 @@ const NewTask: React.FC<Props> = ({ open, onOpenChange, addTask, group }) => {
 
 	const formSubmit = async (data: formType) => {
 		try {
-			const response = await api.post("/api/task", { ...data, group, user: user._id })
+			const response = await api.post("/task", { ...data, group, user: user._id })
 			if (response.data.success) {
-				console.log(response.data)
-				toast.success(response.data.message)
 				addTask(response.data.task)
 				onOpenChange(false)
 			}
@@ -60,8 +58,8 @@ const NewTask: React.FC<Props> = ({ open, onOpenChange, addTask, group }) => {
 
 	return (
 		<Dialog open={open} onOpenChange={onOpenChange}>
-			<DialogTrigger>
-				<Icon icon={"typcn:plus"} className="text-4xl outline-none text-green-500" />
+			<DialogTrigger className="w-full h-full outline-none">
+				{children}
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
