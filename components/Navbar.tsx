@@ -1,7 +1,6 @@
 "use client"
-
-import { useAuth } from "@/context/AuthContext";
-import { ReactNode } from "react";
+import { useAuth } from "@/context/AuthContext"
+import { ReactNode } from "react"
 
 interface Props {
 	title?: string,

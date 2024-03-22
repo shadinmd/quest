@@ -6,6 +6,9 @@ import Container from '@/components/Container'
 import Sidebar from '@/components/Sidebar'
 import { AuthProvider } from '@/context/AuthContext'
 import { Toaster } from 'sonner'
+import GroupCommand from '@/components/GroupCommand'
+import { headers } from "next/headers"
+import Navbar from '@/components/Navbar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,13 +20,19 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 
+	const pathName = headers().get("next-url")
+
 	return (
 		<html lang="en">
 			<body className={cn(inter.className, "flex overflow-hidden h-screen")}>
 				<Toaster expand={true} position='top-center' richColors={true} />
 				<AuthProvider>
-					<Sidebar />
-					{children}
+					<GroupCommand />
+					<Navbar />
+					<Container className="gap-2 pb-20 px-10 h-screen w-screen">
+						{(pathName != "/register" && pathName != "/login") && < Sidebar />}
+						{children}
+					</Container>
 				</AuthProvider>
 			</body>
 		</html >

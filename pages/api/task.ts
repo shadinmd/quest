@@ -22,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 		if (req.method == "GET") {
 			const { group } = req.query
-			const tasks = await taskModel.find({ group })
+			const tasks = await taskModel.find({ group, user })
 
 			res.status(200).send({
 				success: true,
