@@ -74,11 +74,10 @@ const Page = ({ params }: Props) => {
 
 		let temp = [...tasks]
 		const index = temp.findIndex((e) => e._id == id)
-		console.log(index)
 		temp[index].completed = !temp[index].completed
 		setTasks(temp)
 
-		api.patch("/task/complete", { id: tasks[index]._id, completed: !tasks[index].completed }).then(({ data }) => {
+		api.patch("/task/complete", { id: tasks[index]._id, completed: temp[index].completed }).then(({ data }) => {
 			if (!data.success) {
 				toast.error(data.message)
 			}
