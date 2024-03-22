@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 const Register = () => {
 
@@ -66,6 +67,9 @@ const Register = () => {
 			<button className="bg-black text-white font-bold px-3 py-1 rounded-lg" type="submit">
 				Register
 			</button>
+			<Link href={"/login"} className="text-gray-400 font-bold">
+				allready have an account? <span className="text-black"> Login here</span>
+			</Link>
 		</form>
 	</Container>
 	)
