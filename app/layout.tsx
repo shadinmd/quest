@@ -8,7 +8,7 @@ import { AuthProvider } from '@/context/AuthContext'
 import { Toaster } from 'sonner'
 import GroupCommand from '@/components/GroupCommand'
 import { headers } from "next/headers"
-import Navbar from '@/components/Navbar'
+import { GroupProvider } from '@/context/GroupContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,12 +27,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 			<body className={cn(inter.className, "flex overflow-hidden h-screen")}>
 				<Toaster expand={true} position='top-center' richColors={true} />
 				<AuthProvider>
-					<GroupCommand />
-					<Navbar />
-					<Container className="gap-2 pb-20 px-10 h-screen w-screen">
-						{(pathName != "/register" && pathName != "/login") && < Sidebar />}
-						{children}
-					</Container>
+					<GroupProvider>
+						<GroupCommand />
+						<Container className="h-screen w-screen">
+							{(pathName != "/register" && pathName != "/login") && < Sidebar />}
+							{children}
+						</Container>
+					</GroupProvider>
 				</AuthProvider>
 			</body>
 		</html >

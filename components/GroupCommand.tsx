@@ -28,14 +28,14 @@ const GroupCommand = () => {
 	}, [groups, open])
 
 	const onSelect = (id: string) => {
-		router.push(`/g/${id}`)
+		router.push(`/tasks/${id}`)
 		onOpenChange(false)
 	}
 
 	return (
 		<CommandDialog open={open} onOpenChange={onOpenChange} >
 			<CommandInput className="outline-none px-3" placeholder="Enter a group name" />
-			<CommandList className="">
+			<CommandList className="rounded-none">
 				{
 					groups.map((e, i) => (
 						<CommandItem key={i} onSelect={() => onSelect(e?._id!)} className="px-5" >
