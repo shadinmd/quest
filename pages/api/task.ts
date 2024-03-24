@@ -45,6 +45,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				return
 			}
 
+			const taskSearch = await taskModel.findOne({ title })
+
+			if (taskSearch) {
+				res.status(400).send({
+					success: false,
+					message: "task allready exists"
+				})
+				return
+			}
+
 			const task = await new taskModel({ title, description, group, user }).save()
 			res.status(200).send({
 				success: true,
