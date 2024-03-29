@@ -3,12 +3,44 @@ import { cn } from "@/lib/utils"
 import { Icon } from "@iconify/react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
+import { ReactNode } from "react"
 
 
 interface Item {
 	icon: string,
 	to: string,
 	title: string
+}
+
+export const ResponsiveSidebar = ({ children }: { children: ReactNode }) => {
+
+	const pathname = usePathname()
+
+	if (pathname == "/login" || pathname == "/register") {
+		return <></>
+	}
+
+	return (
+		<Sheet>
+			<SheetTrigger className="outline-none">
+				{children}
+			</SheetTrigger>
+			<SheetContent className="flex flex-col items-center p-0" side="left">
+				<div className="flex flex-col items-center w-64 justify-start h-full">
+					<div className="flex items-center p-5 border-b-2 w-full">
+						<p className="text-3xl font-bold">Quest</p>
+					</div>
+					<div className="flex flex-col w-full">
+						<SidebarItem title="Home" to="/" icon="mdi:home" />
+						<SidebarItem title="Tasks" to="/tasks" icon="mdi:clipboard-text-clock" />
+						<SidebarItem title="Diary" to={"/diary"} icon={"mdi:book"} />
+						<SidebarItem title="Bucket" to={"/bucket"} icon={"entypo:bucket"} />
+					</div>
+				</div>
+			</SheetContent>
+		</Sheet>
+	)
 }
 
 const Sidebar = () => {
@@ -20,14 +52,14 @@ const Sidebar = () => {
 	}
 
 	return (
-		<div className="flex flex-col border-r-2 items-center w-64 justify-start h-full">
+		<div className="hidden flex-col border-r-2 items-center w-64 justify-start h-full sm:flex">
 			<div className="flex items-center p-5 border-b-2 w-full">
 				<p className="text-3xl font-bold">Quest</p>
 			</div>
 			<div className="flex flex-col w-full">
 				<SidebarItem title="Home" to="/" icon="mdi:home" />
 				<SidebarItem title="Tasks" to="/tasks" icon="mdi:clipboard-text-clock" />
-				<SidebarItem title="Journal" to={"/journal"} icon={"mdi:book"} />
+				<SidebarItem title="Diary" to={"/diary"} icon={"mdi:book"} />
 				<SidebarItem title="Bucket" to={"/bucket"} icon={"entypo:bucket"} />
 			</div>
 		</div>

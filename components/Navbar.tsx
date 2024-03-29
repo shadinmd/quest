@@ -1,6 +1,8 @@
 "use client"
 import { useAuth } from "@/context/AuthContext"
 import { ReactNode } from "react"
+import { ResponsiveSidebar } from "./Sidebar"
+import { Icon } from "@iconify/react/dist/iconify.js"
 
 interface Props {
 	title?: string,
@@ -18,7 +20,14 @@ const Navbar = ({ title, children }: Props) => {
 				{children}
 			</div>
 			<div className="flex items-center">
-				<p className="font-bold text-xl">{user.username}</p>
+				<ResponsiveSidebar>
+					{user.username ?
+						<p className="font-bold text-xl sm:hidden">{user.username}</p>
+						:
+						<Icon className="font-bold text-xl sm:hidden" icon={"mdi:menu"} />
+					}
+				</ResponsiveSidebar >
+				<p className="font-bold text-xl hidden sm:block">{user.username}</p>
 			</div>
 		</header >
 	);

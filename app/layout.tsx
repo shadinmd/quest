@@ -7,7 +7,6 @@ import Sidebar from '@/components/Sidebar'
 import { AuthProvider } from '@/context/AuthContext'
 import { Toaster } from 'sonner'
 import GroupCommand from '@/components/GroupCommand'
-import { headers } from "next/headers"
 import { GroupProvider } from '@/context/GroupContext'
 
 const inter = Inter({ subsets: ['latin'] })

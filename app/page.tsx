@@ -2,6 +2,7 @@
 import Container from "@/components/Container"
 import { memo, useEffect, useState } from "react";
 import moment from "moment"
+import Navbar from "@/components/Navbar";
 
 const Clock = memo(() => {
 	const [time, setTime] = useState<Date>()
@@ -21,8 +22,11 @@ Clock.displayName = "Clock"
 const Home = () => {
 	return (
 		<Container className="flex-col items-center justify-center">
-			<Clock />
-			<p className="text-3xl font-bold">{moment(new Date()).format("DD/MM/YYYY")}</p>
+			<Navbar />
+			<div className="flex flex-col h-full items-center justify-center">
+				<Clock />
+				<p className="text-3xl font-bold">{moment(new Date()).format("DD/MM/YYYY")}</p>
+			</div>
 		</Container>
 	)
 }
