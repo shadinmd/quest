@@ -29,7 +29,8 @@ const Page = ({ params }: Props) => {
 	const [group, setGroup] = useState<GroupInterface>()
 	const [loading, setLoading] = useState(true)
 	const [search, setSearch] = useState("")
-	const [sort, setSort] = useState("")
+	const [sort, setSort] = useState("complete")
+	const [filter, setFilter] = useState("")
 
 	const { removeGroup } = useGroup()
 
@@ -39,7 +40,7 @@ const Page = ({ params }: Props) => {
 		api.get(`/task?group=${params.id}`)
 			.then(({ data }) => {
 				if (data.success) {
-					setTasks(data.tasks)
+					setTasks(data.tasks.sort((a: TaskInterface, b: TaskInterface) => new Date(b.updatedAt).getSeconds() - new Date(a.updatedAt).getSeconds()))
 				} else {
 					toast.error(data.message)
 				}
@@ -65,12 +66,30 @@ const Page = ({ params }: Props) => {
 	}, [params.id])
 
 	useEffect(() => {
-		if (search != "") {
-			setFilteredTasks(tasks.filter(e => e.title?.includes(search)))
-		} else {
-			setFilteredTasks(tasks)
+		let filtered = tasks;
+		if (search !== "") {
+			filtered = tasks.filter(e => e.title?.includes(search));
 		}
-	}, [search, tasks])
+
+		if (sort === "date-ascend") {
+			filtered.sort((a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime());
+		} else if (sort === "date-descend") {
+			filtered.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+		}
+
+		if (filter === "filter") {
+		}
+
+		if (filter === "complete") {
+			filtered = filtered.filter((e) => e.completed)
+		}
+
+		if (filter === "incomplete") {
+			filtered = filtered.filter((e) => !e.completed)
+		}
+
+		setFilteredTasks(filtered);
+	}, [search, sort, tasks, filter]);
 
 	const addTask = (task: TaskInterface) => {
 		setTasks(prev => [...prev, task])
@@ -176,7 +195,15 @@ const Page = ({ params }: Props) => {
 								<Icon icon={"mdi:trash"} />
 							</div>
 						</YesNoDialog>
-						<Sort setSearch={setSort} />
+						<select onChange={(e) => { setSort(e.target.value) }} className="w-full border-r-2 font-semibold text-sm h-full outline-none">
+							<option value={"date-descend"}>Date descend</option>
+							<option value={"date-ascend"}>Date ascend</option>
+						</select>
+						<select onChange={(e) => { setFilter(e.target.value) }} className="w-full font-semibold text-sm h-full outline-none">
+							<option value={"filter"}>Filter</option>
+							<option value={"complete"}>Complete</option>
+							<option value={"incomplete"}>In complete</option>
+						</select>
 					</div>
 				</div>
 				<div className="w-full h-full max-h-full overflow-y-auto">
