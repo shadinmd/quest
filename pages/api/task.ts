@@ -12,11 +12,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 			return
 		}
 
-		if (req.method && !(["GET", "POST", "PUT", "DELETE"].includes(req.method))) {
-			res.status(404).end()
-			return
-		}
-
 		const user = authorize(req, res)
 		if (!user) return;
 
@@ -86,7 +81,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				success: true,
 				message: "task deleted successfully"
 			})
+			return
 		}
+
+		res.status(404).send({
+			success: false,
+			message: "page not found"
+		})
 
 	} catch (error) {
 		console.log(error)
