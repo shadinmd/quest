@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="en">
 			<body className={cn(inter.className, "flex overflow-hidden h-screen")}>
-				<Toaster expand={true} position='top-center' richColors={true} />
+				<Toaster expand={true} position='bottom-right' richColors={true} />
 				<AuthProvider>
 					<GroupProvider>
 						<GroupCommand />
