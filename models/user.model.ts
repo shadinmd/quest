@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema<UserInterface>({
 	},
 	image: {
 		type: String
+	},
+	blocked: {
+		type: Boolean,
+		default: false
 	}
 }, { timestamps: true })
 

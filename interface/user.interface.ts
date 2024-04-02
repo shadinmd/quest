@@ -3,6 +3,8 @@ interface UserInterface {
 	email?: string,
 	password?: string,
 	image?: string,
+	blocked?: boolean,
+	createdAt: Date
 }
 
 export default UserInterface
