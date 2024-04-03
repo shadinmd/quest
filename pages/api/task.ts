@@ -40,7 +40,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 				return
 			}
 
-			const taskSearch = await taskModel.findOne({ title })
+			const taskSearch = await taskModel.findOne({ title, user })
 
 			if (taskSearch) {
 				res.status(400).send({
