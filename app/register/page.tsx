@@ -22,7 +22,7 @@ const Register = () => {
 	const formSubmit = async (data: formType) => {
 		console.log(data)
 		try {
-			const response = await api.post("/api/auth/register", data)
+			const response = await api.post("/auth/register", data)
 			console.log(response)
 			if (response.data.success)
 				router.push("/login")
