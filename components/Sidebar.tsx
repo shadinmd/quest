@@ -61,6 +61,7 @@ const Sidebar = () => {
 				<SidebarItem title="Tasks" to="/tasks" icon="mdi:clipboard-text-clock" />
 				<SidebarItem title="Diary" to={"/diary"} icon={"mdi:book"} />
 				<SidebarItem title="Bucket" to={"/bucket"} icon={"entypo:bucket"} />
+				<SidebarItem title="Settings" to={"/settings"} icon={"mdi:cog"} />
 			</div>
 		</div>
 	)
