@@ -22,7 +22,7 @@ const Calendar = () => {
 		newDate.setMonth(newDate.getMonth() - 1)
 		console.log(newDate, today, newDate.getMonth() == today.getMonth())
 		setDate(newDate)
-	}, [date])
+	}, [date, today])
 
 	return (
 		<div className="flex flex-col w-full h-full">
