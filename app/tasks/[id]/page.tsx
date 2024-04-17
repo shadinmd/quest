@@ -10,7 +10,7 @@ import api, { handleAxiosError } from "@/lib/api"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { isAxiosError } from "axios"
 import { useRouter } from "next/navigation"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { ScaleLoader } from "react-spinners"
 import { toast } from "sonner"
 
@@ -29,6 +29,7 @@ const Page = ({ params }: Props) => {
 	const [loading, setLoading] = useState(true)
 	const [search, setSearch] = useState("")
 	const [filter, setFilter] = useState("")
+	const searchRef = useRef<HTMLInputElement>(null)
 
 	const { removeGroup } = useGroup()
 
@@ -62,6 +63,22 @@ const Page = ({ params }: Props) => {
 				setLoading(false)
 			})
 	}, [params.id])
+
+	useEffect(() => {
+		const handler = (e: KeyboardEvent) => {
+			if (e.key == "f" && e.ctrlKey) {
+				e.preventDefault()
+				if (searchRef.current)
+					searchRef.current.focus()
+			}
+		}
+
+		addEventListener("keydown", handler)
+
+		return () => {
+			removeEventListener("keydown", handler)
+		}
+	}, [])
 
 	useEffect(() => {
 		let filtered = tasks;
@@ -164,6 +181,7 @@ const Page = ({ params }: Props) => {
 			<Container className="flex-col justify-start overflow-hidden">
 				<div className="flex items-center w-full text-xl border-b-2">
 					<input
+						ref={searchRef}
 						autoFocus
 						value={search}
 						onChange={e => setSearch(e.target.value)}
