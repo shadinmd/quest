@@ -28,7 +28,6 @@ const Page = ({ params }: Props) => {
 	const [group, setGroup] = useState<GroupInterface>()
 	const [loading, setLoading] = useState(true)
 	const [search, setSearch] = useState("")
-	const [sort, setSort] = useState("complete")
 	const [filter, setFilter] = useState("")
 
 	const { removeGroup } = useGroup()
@@ -70,12 +69,6 @@ const Page = ({ params }: Props) => {
 			filtered = tasks.filter(e => e.title?.includes(search));
 		}
 
-		if (sort === "date-ascend") {
-			filtered.sort((a, b) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime());
-		} else if (sort === "date-descend") {
-			filtered.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
-		}
-
 		if (filter === "filter") {
 		}
 
@@ -88,7 +81,7 @@ const Page = ({ params }: Props) => {
 		}
 
 		setFilteredTasks(filtered);
-	}, [search, sort, tasks, filter]);
+	}, [search, tasks, filter]);
 
 	const addTask = (task: TaskInterface) => {
 		setTasks(prev => [...prev, task])
@@ -194,10 +187,6 @@ const Page = ({ params }: Props) => {
 								<Icon icon={"mdi:trash"} />
 							</div>
 						</YesNoDialog>
-						<select onChange={(e) => { setSort(e.target.value) }} className="w-full border-r-2 font-semibold text-sm h-full outline-none">
-							<option value={"date-descend"}>Date descend</option>
-							<option value={"date-ascend"}>Date ascend</option>
-						</select>
 						<select onChange={(e) => { setFilter(e.target.value) }} className="w-full font-semibold text-sm h-full outline-none">
 							<option value={"filter"}>Filter</option>
 							<option value={"complete"}>Complete</option>
