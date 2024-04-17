@@ -3,7 +3,7 @@ import Container from "@/components/Container"
 import GroupInterface from "@/interface/group.interface"
 import api, { handleAxiosError } from "@/lib/api"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import Navbar from "@/components/Navbar"
 import NewGroup from "@/components/group/NewGroup"
@@ -18,6 +18,7 @@ const Page = () => {
 	const [newGroupModal, setNewGroupModal] = useState(false)
 	const [loading, setLoading] = useState(true)
 	const [search, setSearch] = useState("")
+	const searchRef = useRef<HTMLInputElement>(null)
 
 	const router = useRouter()
 
@@ -52,6 +53,22 @@ const Page = () => {
 
 	}, [search, groups])
 
+	useEffect(() => {
+		const handler = (e: KeyboardEvent) => {
+			if (e.key == "f" && e.ctrlKey) {
+				e.preventDefault()
+				if (searchRef.current)
+					searchRef.current.focus()
+			}
+		}
+
+		addEventListener("keydown", handler)
+
+		return () => {
+			removeEventListener("keydown", handler)
+		}
+	}, [])
+
 	if (loading) {
 		return (
 			<Container>
@@ -66,6 +83,7 @@ const Page = () => {
 			<Container className="flex-col justify-start">
 				<div className="flex items-center w-full text-xl border-b-2">
 					<input
+						ref={searchRef}
 						autoFocus
 						value={search}
 						onChange={e => setSearch(e.target.value)}
