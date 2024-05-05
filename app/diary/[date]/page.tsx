@@ -78,10 +78,10 @@ const Page = ({ params }: Props) => {
 					onChange={e => setDiary(prev => ({ ...prev, title: e.target.value }))}
 					placeholder="Title"
 					type="text"
-					className="text-xl bg-white w-full px-5 py-3 border-b-2 font-bold outline-none"
+					className="text-xl bg-white w-full px-5 py-3 border-b-2 font-bold outline-none dark:bg-gray"
 				/>
 				<div className="flex items-center h-full">
-					<button onClick={e => { e.preventDefault(); newDiary ? createDiary() : saveDiary() }} className={`border-2 bg-green-200 font-semibold h-full px-3`}>
+					<button onClick={e => { e.preventDefault(); newDiary ? createDiary() : saveDiary() }} className={`border-2 bg-green-200 dark:bg-green-500 font-semibold h-full px-3`}>
 						Save
 					</button>
 				</div>
@@ -90,7 +90,7 @@ const Page = ({ params }: Props) => {
 				value={diary?.content}
 				onChange={e => setDiary(prev => ({ ...prev, content: e.target.value }))}
 				placeholder="Diary entry here...."
-				className="h-full w-full outline-none border-b-2 p-5 text-xl font-bold"
+				className="h-full w-full outline-none border-b-2 p-5 text-xl font-bold dark:bg-gray dark:border-b-gray"
 			/>
 		</Container>
 	)

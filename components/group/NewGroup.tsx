@@ -64,7 +64,7 @@ const NewGroup: React.FC<Props> = ({ className, open, onOpenChange, addGroup, ch
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>
+					<DialogTitle className="dark:text-white">
 						New Group
 					</DialogTitle>
 					<DialogDescription>
@@ -76,17 +76,17 @@ const NewGroup: React.FC<Props> = ({ className, open, onOpenChange, addGroup, ch
 						{...register("name")}
 						placeholder="Name"
 						type="text"
-						className="px-3 py-1 rounded-lg border-2 border-black"
+						className="px-3 py-1 rounded-lg border-2 border-black outline-none"
 					/>
 					{errors.name && <p className="text-red-500">{errors.name.message}</p>}
 					<input
 						{...register("description")}
 						placeholder="Description"
 						type="text"
-						className="px-3 py-1 rounded-lg border-2 border-black"
+						className="px-3 py-1 rounded-lg border-2 border-black outline-none"
 					/>
 					{errors.description && <p className="text-red-500">{errors.description.message}</p>}
-					<button type="submit" className="bg-black text-white font-bold px-3 py-1 rounded-lg">
+					<button type="submit" className="bg-black text-white dark:bg-white dark:text-black font-bold px-3 py-1 rounded-lg">
 						Create
 					</button>
 				</form>

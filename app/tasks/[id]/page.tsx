@@ -186,7 +186,7 @@ const Page = ({ params }: Props) => {
 						value={search}
 						onChange={e => setSearch(e.target.value)}
 						placeholder="Search..."
-						className="outline-none w-full h-fit py-3 px-6 "
+						className="outline-none w-full h-fit py-3 px-6 dark:bg-gray dark:text-white"
 						type="text"
 					/>
 					<div className="flex items-center w-full h-full">
@@ -196,16 +196,16 @@ const Page = ({ params }: Props) => {
 							addTask={addTask}
 							group={params.id}
 						>
-							<div className="flex items-center justify-center h-full w-full bg-green-300">
+							<div className="flex items-center justify-center h-full w-full bg-green-300 dark:bg-green-500">
 								<Icon icon={"mdi:plus"} />
 							</div>
 						</NewTask>
 						<YesNoDialog className="w-full h-full" onYes={deleteGroup} onNo={() => { console.log("oh no") }}>
-							<div className="flex items-center justify-center h-full w-full bg-red-300">
+							<div className="flex items-center justify-center h-full w-full bg-red-300 dark:bg-red-500">
 								<Icon icon={"mdi:trash"} />
 							</div>
 						</YesNoDialog>
-						<select onChange={(e) => { setFilter(e.target.value) }} className="w-full font-semibold text-sm h-full outline-none">
+						<select onChange={(e) => { setFilter(e.target.value) }} className="w-full font-semibold text-sm h-full outline-none dark:bg-gray">
 							<option value={"filter"}>Filter</option>
 							<option value={"complete"}>Complete</option>
 							<option value={"incomplete"}>In complete</option>

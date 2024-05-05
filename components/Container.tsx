@@ -9,7 +9,7 @@ interface Props {
 
 const Container: React.FC<Props> = ({ className, children }) => {
 	return (
-		<div className={cn("flex items-center justify-center h-full w-full", className)}>
+		<div className={cn("flex items-center justify-center h-full w-full dark:bg-gray dark:text-white", className)}>
 			{children}
 		</div>
 	)

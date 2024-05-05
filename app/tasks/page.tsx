@@ -88,7 +88,7 @@ const Page = () => {
 						value={search}
 						onChange={e => setSearch(e.target.value)}
 						placeholder="Search..."
-						className="outline-none w-full h-fit py-3 px-6 "
+						className="outline-none w-full h-fit py-3 px-6 dark:bg-gray dark:text-white"
 						type="text"
 						onKeyDown={e => {
 							if (e.key == "Enter")
@@ -98,7 +98,7 @@ const Page = () => {
 					/>
 					<div className="flex items-center h-full w-14 justify-center">
 						<NewGroup open={newGroupModal} onOpenChange={setNewGroupModal} addGroup={addGroup} >
-							<div className="flex gap-1 bg-green-200 w-full h-full items-center justify-center">
+							<div className="flex gap-1 bg-green-200 dark:bg-green-500 w-full h-full items-center justify-center">
 								<Icon icon={"mdi:plus"} className="text-2xl" />
 							</div>
 						</NewGroup>

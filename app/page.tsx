@@ -3,6 +3,7 @@ import Container from "@/components/Container"
 import { memo, useEffect, useState } from "react";
 import moment from "moment"
 import Navbar from "@/components/Navbar";
+import { useRouter } from "next/navigation";
 
 const Clock = memo(() => {
 	const [time, setTime] = useState<Date>()
@@ -20,6 +21,14 @@ const Clock = memo(() => {
 Clock.displayName = "Clock"
 
 const Home = () => {
+	const router = useRouter()
+
+	useEffect(() => {
+		if (!localStorage.getItem("token")) {
+			router.push("/login")
+		}
+	}, [])
+
 	return (
 		<Container className="flex-col items-center justify-center">
 			<Navbar />
