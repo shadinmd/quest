@@ -82,6 +82,6 @@ const loginformSchema = z.object({
 type formType = z.infer<typeof loginformSchema>
 type className = string
 
-const inputStyle: className = "px-3 py-1 border-2 border-black rounded-lg font-bold"
+const inputStyle: className = "px-3 py-1 border-2 border-black rounded-lg font-bold dark:text-black"
 
 export default Login

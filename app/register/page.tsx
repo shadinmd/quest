@@ -67,7 +67,7 @@ const Register = () => {
 			<button className="bg-black text-white font-bold px-3 py-1 rounded-lg" type="submit">
 				Register
 			</button>
-			<Link href={"/login"} className="text-gray-400 font-bold">
+			<Link href={"/login"} className="text-gray-400 font-bold dark:text-white">
 				allready have an account? <span className="text-black"> Login here</span>
 			</Link>
 		</form>
@@ -92,6 +92,6 @@ const registerFormSchema = z.object({
 type formType = z.infer<typeof registerFormSchema>
 type className = string
 
-const inputSyle: className = "px-3 py-1 rounded-lg border-2 border-black"
+const inputSyle: className = "px-3 py-1 rounded-lg border-2 border-black dark:black"
 
 export default Register
